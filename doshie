@@ -19,12 +19,19 @@ if [[ "$doshie_cmd" == "--rm" ]]; then
 
   if [[ ! -z "$existing_shell" ]]; then
     echo "removing doshie shell: $existing_shell" >&2
-    docker rm -v $existing_shell
+    docker rm -v -f $existing_shell >/dev/null
   else
     echo "no existing doshie shell exists for this project" >&2
   fi
 
-  rm -f .doshie/.existing_shell
+  if [[ ! -z "$existing_shell" ]]; then
+    if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null; then
+      rm -f .doshie/.existing_shell
+    else
+      echo "something went wrong and the shell wasn't removed. sorry." >&2
+      exit 1
+    fi
+  fi
 
   exit
 
