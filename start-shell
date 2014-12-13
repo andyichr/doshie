@@ -15,6 +15,7 @@ if [[ -f .doshie.rc ]]; then
 fi
 
 # set environment vars
+export HOME="/root"
 export PATH="/src/.doshie/bin:$PATH"
 export PS1="$DOSHIE_PROJECT_NAME> "
 
