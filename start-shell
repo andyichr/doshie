@@ -1,0 +1,33 @@
+#!/bin/bash
+
+################################################################################
+# prepare and start the interactive shell environment
+################################################################################
+
+# change to project directory
+cd /src
+
+# source doshie rc
+DOSHIE_PROJECT_NAME=doshie
+
+if [[ -f .doshie.rc ]]; then
+  . .doshie.rc
+fi
+
+# set environment vars
+export PATH="/src/.doshie/bin:$PATH"
+export PS1="$DOSHIE_PROJECT_NAME> "
+
+cat .doshie/logo >&2
+
+# update the environment
+update
+touch .doshie/.ready
+
+# start the interactive shell
+if [[ -z "$DOSHIE_CMD" ]]; then
+  /bin/bash -l
+else
+  # ..or run the command
+  $DOSHIE_CMD
+fi

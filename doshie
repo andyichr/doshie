@@ -4,17 +4,35 @@
 # start and update the shell container for this project
 ################################################################################
 
-# restart from an existing shell, if possible
-existing_shell="$( cat .doshie/.existing_shell )"
+doshie_cmd="$@"
+doshie_root="$( readlink -f $( dirname $0 ) )"
 
-# ensure a shell is not already running for this project
-if docker ps -q --no-trunc | grep $existing_shell; then
-  echo "a doshie shell for this project is already running" >&2
+# restart from an existing shell, if possible
+if [[ -f .doshie/.existing_shell ]]; then
+  existing_shell="$( cat .doshie/.existing_shell )"
+else
+  existing_shell=""
+fi
+
+# remove existing shell
+if [[ "$doshie_cmd" == "--rm" ]]; then
+
+  if [[ ! -z "$existing_shell" ]]; then
+    echo "removing doshie shell: $existing_shell" >&2
+    docker rm -v $existing_shell
+  else
+    echo "no existing doshie shell exists for this project" >&2
+  fi
+
+  rm -f .doshie/.existing_shell
+
+  exit
+
 fi
 
 # ensure existing shell exists, otherwise clear the reference
 if [[ ! -z "$existing_shell" ]]; then
-  if ! docker ps -a -q --no-trunc | grep $existing_shell; then
+  if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null; then
     echo "doshe shell was lost, so a new one will be built" >&2
     existing_shell=""
   fi
@@ -29,17 +47,47 @@ if [[ -f .doshie.rc ]]; then
   . .doshie.rc
 fi
 
-# if an existing shell is defined, start it
-if [[ ! -z "$existing_shell" ]]; then
+# if an existing shell is not defined, start a new one
+if [[ -z "$existing_shell" ]]; then
 
-  docker start -i "$existing_shell"
+  rm -f .doshie/.ready
 
-else
+  existing_shell=$( docker run -d \
+                               -t \
+                               -i \
+                               -v "$doshie_root"/..:/src \
+                               -e DOSHIE_CMD="" \
+                               "$DOSHIE_BASE_IMAGE" \
+                               /bin/bash -c '. /src/.doshie/start-shell' )
 
-  # if an existing shell is not defined, start a new one
-  docker run -t \
-             -i \
-             "$DOSHIE_BASE_IMAGE" \
-             "/bin/bash -c '/src/.doshie/bin/update; /bin/bash -l'"
+  echo "$existing_shell" > .doshie/.existing_shell
+
+  echo -n "waiting for shell initialization..." >&2
+
+  for attempt in $( seq 1 360 ); do
+
+    if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null 2>&1; then
+      echo "shell disappeared while waiting!" >&2
+      exit 1
+    fi
+
+    if [[ -f .doshie/.ready ]]; then
+      break
+    fi
+
+    sleep 0.5
+    echo -n "."
+
+  done
+
+  echo
 
 fi
+
+# start existing shell
+docker start "$existing_shell" >/dev/null 2>&1
+docker exec -t \
+            -i \
+            --detach=false \
+            "$existing_shell" \
+            /bin/bash -c "DOSHIE_CMD=\"$doshie_cmd\"; . /src/.doshie/start-shell"

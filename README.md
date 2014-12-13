@@ -1,5 +1,11 @@
-doshie
-------
+
+    ██████╗  ██████╗ ███████╗██╗  ██╗██╗███████╗
+    ██╔══██╗██╔═══██╗██╔════╝██║  ██║██║██╔════╝
+    ██║  ██║██║   ██║███████╗███████║██║█████╗  
+    ██║  ██║██║   ██║╚════██║██╔══██║██║██╔══╝  
+    ██████╔╝╚██████╔╝███████║██║  ██║██║███████╗
+    ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝
+                              ...at your service
 
 A simple build-system bootstrapping program for developers who prefer to do
 development in an interactive, isolated, docker-based environment. The idea is
@@ -39,6 +45,12 @@ git submodule add https://github.com/chaconinc/DbConnector .doshie
 cp .doshie/shell ./
 ```
 
+#### Start the Shell
+
+```bash
+./shell
+```
+
 The root directory of the project will be mounted as */src* within the shell.
 In this way, it is possible to use editors and IDEs outside of the shell while
 having the changes instantly reflected within the shell. Additionally, this
@@ -46,6 +58,26 @@ enables generating build output at a location accessible from the host machine,
 such as *target/* in the root of the project. Typical commands run inside the
 shell are *build*, *verify*, and *install*, but this depends on the project
 itself and are not pre-defined by *doshie*.
+
+#### Start the Shell w/ Command
+
+It's possible to start the shell just to run a command:
+
+```bash
+./shell echo hi
+```
+
+### The Shell Container
+
+Doshie creates a docker container (not an image) for the shell. This container
+is reused and incrementally updated with each run of the shell. When the shell
+is no longer needed, run
+
+```bash
+./shell --rm
+```
+
+to remove the existing shell container.
 
 ### Customizing the Shell Environment
 
@@ -74,3 +106,15 @@ system updates, installing of packages, and so-on. Sometimes, if the project is
 to be deployed as a *docker* image, a *Dockerfile* will be included in the
 project root which will add and invoke the same environment update script,
 producing a repeatable configuration for production as well as development.
+
+### Updating
+
+To update *doshie*, run
+
+```bash
+# from project root
+git pull --recurse-submodules
+git submodule update --recursive
+```
+
+in order to pull the latest code and update the submodule reference.

@@ -1,2 +1,4 @@
 *.swp
 *.swo
+.existing_shell
+.ready
