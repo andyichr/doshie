@@ -28,3 +28,6 @@ cp .doshie/shell ./
 
 # verify no containers exist
 [[ "$( docker ps -a -q --no-trunc | wc -l )" == "0" ]]
+
+# done
+#echo "doshie was successfully verified" >&2
