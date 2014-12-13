@@ -97,6 +97,7 @@ customization of *doshie*, such as specifying a base image (optional) and an
 environment update command (optional):
 
 ```bash
+DOSHIE_PROJECT_NAME=myproject    # optional
 DOSHIE_BASE_IMAGE=centos:centos7 # optional
 DOSHIE_ENV_UPDATE=env/update     # optional
 DOSHIE_DOCKER_FLAGS="-p 443:443" # optional
