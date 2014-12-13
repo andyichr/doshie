@@ -124,3 +124,10 @@ git submodule update --recursive
 ```
 
 in order to pull the latest code and update the submodule reference.
+
+Known Issues
+============
+
+Currently, the shell runs as the default docker user (root). This may change in
+the future, with a shell user being added with an id matching the host user's.
+Alternatively, user namespacing may be used once docker supports it.
