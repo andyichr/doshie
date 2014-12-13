@@ -7,12 +7,14 @@
 set -x
 set -e
 
+test_dir="$( mktemp -d )"
+
 # make a test project
-mkdir -p test-proj
-cd test-proj
+cd $test_dir
 
 # install doshie
-ln -s /home/travis/build/andyichr/doshie ./.doshie
+mkdir ./.doshie
+rsync -avr /home/travis/build/andyichr/doshie/ ./.doshie/
 cp .doshie/shell ./
 
 # run a shell command
