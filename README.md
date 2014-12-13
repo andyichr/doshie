@@ -14,7 +14,7 @@ bash, git, and Docker.
 License
 =======
 
-The *doshie* project is released under the MIT license. See COPYING.md for more
+The *doshie* project is released under the MIT license. See [COPYING](COPYING.md) for more
 information
 
 Usage
