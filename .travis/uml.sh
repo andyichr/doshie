@@ -61,11 +61,17 @@ mount --bind /run/resolvconf/resolv.conf /etc/resolv.conf
 
 # Start docker daemon
 docker -d &
-sleep 5
 
-# Use docker
-set -x
-echo "HERE"
-env
-pwd
-docker run ubuntu /bin/echo hello world
+echo "waiting for docker..." >&2
+
+while ! docker ps -a -q >dev/null 2>&1; do
+
+  echo -n "." >&2
+  sleep 0.5
+
+done
+
+echo
+
+# verify the project
+./verify

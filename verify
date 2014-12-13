@@ -1,0 +1,30 @@
+#!/bin/bash
+
+################################################################################
+# run some tests on doshie
+################################################################################
+
+set -x
+set -e
+
+test_id="$( uuidgen )"
+
+# make a test project
+mkdir /tmp/$test_id
+cd /tmp/$test_id
+
+# install doshie
+ln -s /home/travis/build/andyichr/doshie ./.doshie
+cp .doshie/shell ./
+
+# run a shell command
+./shell /bin/true
+
+# run a second command
+./shell echo "$test_id" | grep $test_id
+
+# remove the shell and verify it's gone
+./shell --rm
+
+# verify no containers exist
+[[ "$( docker ps -a -q --no-trunc | wc -l )" == "0" ]]
