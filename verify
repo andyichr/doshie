@@ -7,10 +7,9 @@
 set -x
 set -e
 
-test_dir="$( mktemp -d )"
-
 # make a test project
-cd $test_dir
+mkdir -p test-proj
+cd test-proj
 
 # install doshie
 ln -s /home/travis/build/andyichr/doshie ./.doshie
