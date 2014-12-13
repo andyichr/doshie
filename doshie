@@ -95,8 +95,14 @@ fi
 
 # start existing shell
 docker start "$existing_shell" >/dev/null 2>&1
-docker exec -t \
-            -i \
+
+docker_flags="-t -i"
+
+if [[ ! -z "$doshie_cmd" ]]; then
+  docker_flags=""
+fi
+
+docker exec $docker_flags \
             --detach=false \
             "$existing_shell" \
             /bin/bash -c "DOSHIE_CMD=\"$doshie_cmd\"; . /src/.doshie/start-shell"
