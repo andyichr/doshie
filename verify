@@ -21,7 +21,7 @@ cp .doshie/shell ./
 ./shell /bin/true
 
 # run a second command
-./shell echo "$test_id" | grep $test_id
+./shell echo "16b90581-53f2-430a-8b16-3a02b35e224b" | grep 16b90581-53f2-430a-8b16-3a02b35e224b
 
 # remove the shell and verify it's gone
 ./shell --rm
