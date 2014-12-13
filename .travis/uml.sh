@@ -64,7 +64,7 @@ docker -d &
 
 echo "waiting for docker..." >&2
 
-while ! docker ps -a -q >dev/null 2>&1; do
+while ! docker ps -a -q >/dev/null 2>&1; do
 
   echo -n "." >&2
   sleep 0.5
