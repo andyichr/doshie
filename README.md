@@ -41,7 +41,13 @@ shell to use while developing your project.
 
 ```bash
 # from the root of your project
+
+# add the submodule
 git submodule add https://github.com/chaconinc/DbConnector .doshie
+
+# copy the shell cmd to your project's root
+
+# typically, you want to commit this file as it rarely changes:
 cp .doshie/shell ./
 ```
 
