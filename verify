@@ -7,11 +7,10 @@
 set -x
 set -e
 
-test_id="$( uuidgen )"
+test_dir="$( mktemp -d )"
 
 # make a test project
-mkdir /tmp/$test_id
-cd /tmp/$test_id
+cd $test_dir
 
 # install doshie
 ln -s /home/travis/build/andyichr/doshie ./.doshie
