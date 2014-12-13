@@ -52,7 +52,7 @@ itself and are not pre-defined by *doshie*.
 We recommend creating a directory in the root of the project named *"env/"*.
 Within this directory, add a shell script named something like *env/update*.
 
-#### *.doshie.rc*
+#### .doshie.rc
 
 The *.doshie.rc* file, placed in the root of the project, enables some further
 customization of *doshie*, such as specifying a base image (optional) and an
@@ -64,7 +64,7 @@ DOSHIE_ENV_UPDATE=env/update     # optional
 DOSHIE_DOCKER_FLAGS="-p 443:443" # optional
 ```
 
-*NOTE:* If the base image is changed, there is no guarantee that the built-in
+**NOTE:** If the base image is changed, there is no guarantee that the built-in
 shell commands, such as *update*, will continue to function.
 
 The command specified with *DOSHIE_ENV_UPDATE* should perform an incremental
