@@ -30,4 +30,4 @@ cp .doshie/shell ./
 [[ "$( docker ps -a -q --no-trunc | wc -l )" == "0" ]]
 
 # done
-#echo "doshie was successfully verified" >&2
+echo "doshie was successfully verified" >&2
