@@ -45,7 +45,7 @@ shell to use while developing your project.
 # from the root of your project
 
 # add the submodule
-git submodule add https://github.com/chaconinc/DbConnector .doshie
+git submodule add https://github.com/andyichr/doshie.git .doshie
 
 # copy the shell cmd to your project's root
 
