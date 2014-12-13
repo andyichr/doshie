@@ -3,3 +3,13 @@
 ################################################################################
 # *incrementally* update the environment
 ################################################################################
+
+cd /src
+
+if [[ -f .doshie.rc ]]; then
+  . .doshie.rc
+fi
+
+if [[ ! -z "$DOSHIE_ENV_UPDATE" ]]; then
+  $DOSHIE_ENV_UPDATE
+fi
