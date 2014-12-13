@@ -35,7 +35,7 @@ shell to use while developing your project.
 
 ```bash
 # from the root of your project
-git submodule add https://github.com/chaconinc/DbConnector
+git submodule add https://github.com/chaconinc/DbConnector .doshie
 cp .doshie/shell ./
 ```
 
