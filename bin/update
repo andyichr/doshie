@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "doshie is updating the environment" >&2

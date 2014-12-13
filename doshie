@@ -1,0 +1,45 @@
+#!/bin/bash
+
+################################################################################
+# start and update the shell container for this project
+################################################################################
+
+# restart from an existing shell, if possible
+existing_shell="$( cat .doshie/.existing_shell )"
+
+# ensure a shell is not already running for this project
+if docker ps -q --no-trunc | grep $existing_shell; then
+  echo "a doshie shell for this project is already running" >&2
+fi
+
+# ensure existing shell exists, otherwise clear the reference
+if [[ ! -z "$existing_shell" ]]; then
+  if ! docker ps -a -q --no-trunc | grep $existing_shell; then
+    echo "doshe shell was lost, so a new one will be built" >&2
+    existing_shell=""
+  fi
+fi
+
+# set default settings
+DOSHIE_BASE_IMAGE=centos:centos7
+DOSHIE_ENV_UPDATE=/bin/true
+
+# source the rc settings
+if [[ -f .doshie.rc ]]; then
+  . .doshie.rc
+fi
+
+# if an existing shell is defined, start it
+if [[ ! -z "$existing_shell" ]]; then
+
+  docker start -i "$existing_shell"
+
+else
+
+  # if an existing shell is not defined, start a new one
+  docker run -t \
+             -i \
+             "$DOSHIE_BASE_IMAGE" \
+             "/bin/bash -c '/src/.doshie/bin/update; /bin/bash -l'"
+
+fi
