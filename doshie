@@ -41,6 +41,7 @@ fi
 # set default settings
 DOSHIE_BASE_IMAGE=centos:centos7
 DOSHIE_ENV_UPDATE=/bin/true
+DOSHIE_DOCKER_FLAGS=""
 
 # source the rc settings
 if [[ -f .doshie.rc ]]; then
@@ -57,6 +58,7 @@ if [[ -z "$existing_shell" ]]; then
                                -i \
                                -v "$doshie_root"/..:/src \
                                -e DOSHIE_CMD="" \
+                               $DOSHIE_DOCKER_FLAGS \
                                "$DOSHIE_BASE_IMAGE" \
                                /bin/bash -c '. /src/.doshie/start-shell' )
 
