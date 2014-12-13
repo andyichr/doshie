@@ -27,7 +27,7 @@ shell to use while developing your project.
 
     # TODO code here
 
-The root directory of the project will be mounted as /src within the shell. In
+The root directory of the project will be mounted as */src* within the shell. In
 this way, it is possible to use editors and IDEs outside of the shell while
 having the changes instantly reflected within the shell. Typical commands run
 inside the shell are build, verify, and install, but this depends on the
