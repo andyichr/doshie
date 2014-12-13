@@ -9,9 +9,9 @@
 
 [![Build Status](https://travis-ci.org/andyichr/doshie.svg)](https://travis-ci.org/andyichr/doshie)
 
-A simple build-system bootstrapping program for developers who prefer to do
-development in an interactive, isolated, docker-based environment. The idea is
-to enable writing software which has complex, build-time dependencies to be
+A simple build-system bootstrapping program for software writers who prefer to
+do development in an interactive, isolated, docker-based environment. The idea
+is to enable writing software which has complex, build-time dependencies to be
 worked on in a consistent, repeatable way. The typical use-case involves
 quickly starting a git project, adding *doshie*, running *./shell*, and coding.
 The end result is, hopefully, a very rapid and low-friction way to begin
