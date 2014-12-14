@@ -9,6 +9,8 @@ cd /src
 # ensure sudo is installed
 if which yum >/dev/null 2>&1; then
 
+  yum -y update
+
   if ! which sudo >/dev/null 2>&1; then
     yum -y install sudo
   fi
