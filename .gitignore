@@ -2,3 +2,4 @@
 *.swo
 .existing_shell
 .ready
+.update-lock
