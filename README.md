@@ -64,7 +64,7 @@ git submodule add https://github.com/andyichr/doshie.git .doshie
 cp .doshie/shell ./
 ```
 
-#### Start the Shell
+### Start the Shell
 
 ```bash
 ./shell
@@ -86,7 +86,7 @@ It's possible to start the shell just to run a command:
 ./shell echo hi
 ```
 
-### The Shell Container
+#### The Shell Container
 
 Doshie creates a docker container (not an image) for the shell. This container
 is reused and incrementally updated with each run of the shell. When the shell
