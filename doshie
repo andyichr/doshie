@@ -76,6 +76,7 @@ if [[ -z "$existing_shell" ]]; then
   for attempt in $( seq 1 360 ); do
 
     if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null 2>&1; then
+      echo
       echo "shell disappeared while waiting!" >&2
       exit 1
     fi
