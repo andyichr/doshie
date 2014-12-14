@@ -72,7 +72,6 @@ if [[ -z "$existing_shell" ]]; then
   existing_shell=$( docker run -d \
                                -t \
                                -i \
-                               --rm \
                                -v "$doshie_root"/..:/src \
                                -e DOSHIE_CMD="" \
                                -e DOSHIE_UID="$doshie_uid" \
