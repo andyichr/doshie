@@ -15,11 +15,30 @@ if [[ -f .doshie.rc ]]; then
 fi
 
 # set environment vars
-export HOME="/root"
+cat <<! >/etc/profile.d/doshie.sh
 export PATH="/src/.doshie/bin:$PATH"
 export PS1="$DOSHIE_PROJECT_NAME> "
+cd /src
+!
+
+chmod +x /etc/profile.d/doshie.sh
+. /etc/profile.d/doshie.sh
 
 cat .doshie/logo >&2
+
+# create group to match host group
+doshie_group="$( cat /etc/group | awk -F: '$3 == 1000 { print $1 }' )"
+
+if [[ -z "$doshie_group" ]]; then
+  echo "creating group doshie_grp_$DOSHIE_GID" >&2
+  groupadd -g $DOSHIE_UID doshie_grp_$DOSHIE_GID
+fi
+
+# create user to match host user
+if ! id -u "$DOSHIE_UID" >/dev/null 2>&1; then 
+  echo "creating user doshie_$DOSHIE_UID" >&2
+  useradd -u $DOSHIE_UID -g $DOSHIE_GID doshie_$DOSHIE_UID
+fi
 
 # update the environment
 update
@@ -27,8 +46,8 @@ touch .doshie/.ready
 
 # start the interactive shell
 if [[ -z "$DOSHIE_CMD" ]]; then
-  /bin/bash -l
+  su - doshie_$DOSHIE_UID
 else
   # ..or run the command
-  $DOSHIE_CMD
+  su - doshie_$DOSHIE_UID -c "$DOSHIE_CMD"
 fi
