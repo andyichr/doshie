@@ -42,6 +42,7 @@ if ! id -u "$DOSHIE_UID" >/dev/null 2>&1; then
   echo "creating user doshie_$DOSHIE_UID" >&2
   useradd -u $DOSHIE_UID -g $DOSHIE_GID doshie_$DOSHIE_UID
   echo "doshie_$DOSHIE_UID    ALL = NOPASSWD: ALL" >> /etc/sudoers
+  sed -i '/secure_path/d' /etc/sudoers
 fi
 
 # mark the system as ready
