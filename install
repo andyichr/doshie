@@ -1,0 +1,25 @@
+#!/bin/bash
+
+################################################################################
+# installs (or upgrades) doshie in a git-based software project
+################################################################################
+
+set -e
+
+# precondition: we're at the root of a git project
+if ! ( [[ -d .git ]] && git rev-parse --is-inside-work-tree >/dev/null ); then
+  echo "this is not the root of a git project" >&2
+  exit 1
+fi
+
+# add the submodule
+if [[ ! -d .doshie ]]; then
+  git submodule add https://github.com/andyichr/doshie.git .doshie
+fi
+
+# copy shell bin
+cp -f .doshie/shell ./
+
+# update doshie
+cd .doshie
+git pull
