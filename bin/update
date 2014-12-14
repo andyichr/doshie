@@ -6,23 +6,28 @@
 
 cd /src
 
-# ensure sudo is installed
-if which yum >/dev/null 2>&1; then
+(
+  flock -w 360 -n 9 || exit 1
 
-  yum -y update
+  # ensure sudo is installed
+  if which yum >/dev/null 2>&1; then
 
-  if ! which sudo >/dev/null 2>&1; then
-    yum -y install sudo
+    yum -y update
+
+    if ! which sudo >/dev/null 2>&1; then
+      yum -y install sudo
+    fi
+
   fi
 
-fi
+  # load environment
+  if [[ -f .doshie.rc ]]; then
+    . .doshie.rc
+  fi
 
-# load environment
-if [[ -f .doshie.rc ]]; then
-  . .doshie.rc
-fi
+  # run update hooks
+  if [[ ! -z "$DOSHIE_ENV_UPDATE" ]]; then
+    $DOSHIE_ENV_UPDATE
+  fi
 
-# run update hooks
-if [[ ! -z "$DOSHIE_ENV_UPDATE" ]]; then
-  $DOSHIE_ENV_UPDATE
-fi
+) 9>.doshie/.update-lock

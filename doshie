@@ -84,7 +84,7 @@ if [[ -z "$existing_shell" ]]; then
 
   echo -n "waiting for shell initialization..." >&2
 
-  for attempt in $( seq 1 360 ); do
+  for attempt in $( seq 1 720 ); do
 
     if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null 2>&1; then
       echo
