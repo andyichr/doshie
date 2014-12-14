@@ -36,10 +36,21 @@ Requirements were intentionally kept simple, and they are:
 Usage
 =====
 
-Simply add *doshie* as a git submodule in your project and *cp .doshie/shell* to
-the root of your project. At this point, you will be able to run *./shell* from
-within the root of your project, and you will be presented with an interactive
-shell to use while developing your project.
+### Automatic install
+
+Run the installation program from the root of your git-based software project:
+
+```bash
+curl -s https://raw.githubusercontent.com/andyichr/doshie/master/install | bash -
+```
+
+### Manual Install
+
+If a manual installation process is preferred, simply add *doshie* as a git
+submodule in your project and *cp .doshie/shell* to the root of your project.
+At this point, you will be able to run *./shell* from within the root of your
+project, and you will be presented with an interactive shell to use while
+developing your project.
 
 ```bash
 # from the root of your project
@@ -118,6 +129,16 @@ producing a repeatable configuration for production as well as development.
 
 ### Updating
 
+#### Automatic Update
+
+Re-run the installation program to update *doshie*:
+
+```bash
+curl -s https://raw.githubusercontent.com/andyichr/doshie/master/install | bash -
+```
+
+#### Manual Update
+
 To update *doshie*, run
 
 ```bash
@@ -127,6 +148,11 @@ git submodule update --recursive
 ```
 
 in order to pull the latest code and update the submodule reference.
+
+#### Committing Submodule References
+
+Generally, after updating *doshie*, it's a good idea to commit *.doshie* in
+order to commit the upgrade of *doshie* in the project.
 
 Known Issues
 ============
