@@ -6,10 +6,21 @@
 
 cd /src
 
+# ensure sudo is installed
+if which yum >/dev/null 2>&1; then
+
+  if ! which sudo >/dev/null 2>&1; then
+    yum -y install sudo
+  fi
+
+fi
+
+# load environment
 if [[ -f .doshie.rc ]]; then
   . .doshie.rc
 fi
 
+# run update hooks
 if [[ ! -z "$DOSHIE_ENV_UPDATE" ]]; then
   $DOSHIE_ENV_UPDATE
 fi

@@ -4,13 +4,6 @@
 # start and update the shell container for this project
 ################################################################################
 
-doshie_cmd=""
-
-for i in $( seq 1 $# ); do
-  doshie_cmd="$doshie_cmd \"$( echo "$1" | sed -e 's/\"/\\\"/g' )\""
-  shift
-done
-
 doshie_uid="$( id -u )"
 doshie_gid="$( id -g )"
 doshie_root="$( readlink -f $( dirname $0 ) )"
@@ -23,7 +16,7 @@ else
 fi
 
 # remove existing shell
-if [[ "$doshie_cmd" == "--rm" ]]; then
+if [[ "$@" == "--rm" ]]; then
 
   if [[ ! -z "$existing_shell" ]]; then
     echo "removing doshie shell: $existing_shell" >&2
@@ -44,6 +37,14 @@ if [[ "$doshie_cmd" == "--rm" ]]; then
   exit
 
 fi
+
+# construct shell cmd from args
+doshie_cmd=""
+
+for i in $( seq 1 $# ); do
+  doshie_cmd="$doshie_cmd \"$( echo "$1" | sed -e 's/\"/\\\"/g' )\""
+  shift
+done
 
 # ensure existing shell exists, otherwise clear the reference
 if [[ ! -z "$existing_shell" ]]; then

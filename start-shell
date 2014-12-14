@@ -26,6 +26,9 @@ chmod +x /etc/profile.d/doshie.sh
 
 cat .doshie/logo >&2
 
+# update the environment
+update
+
 # create group to match host group
 doshie_group="$( cat /etc/group | awk -F: '$3 == 1000 { print $1 }' )"
 
@@ -38,10 +41,10 @@ fi
 if ! id -u "$DOSHIE_UID" >/dev/null 2>&1; then 
   echo "creating user doshie_$DOSHIE_UID" >&2
   useradd -u $DOSHIE_UID -g $DOSHIE_GID doshie_$DOSHIE_UID
+  echo "doshie_$DOSHIE_UID    ALL = NOPASSWD: ALL" >> /etc/sudoers
 fi
 
-# update the environment
-update
+# mark the system as ready
 touch .doshie/.ready
 
 # start the interactive shell
