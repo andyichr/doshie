@@ -92,6 +92,12 @@ Doshie creates a docker container (not an image) for the shell. This container
 is reused and incrementally updated with each run of the shell. When the shell
 is no longer needed, run
 
+**The interactive shell, and commands run in it by the user are run as a
+generated user inside the shell with an id/gid matching the user on the host
+who invoked the shell.** This enables development activity to happen from
+inside the shell without messing up permissions of other files in the source of
+the project.
+
 ```bash
 ./shell --rm
 ```
@@ -153,10 +159,3 @@ in order to pull the latest code and update the submodule reference.
 
 Generally, after updating *doshie*, it's a good idea to commit *.doshie* in
 order to commit the upgrade of *doshie* in the project.
-
-Known Issues
-============
-
-Currently, the shell runs as the default docker user (root). This may change in
-the future, with a shell user being added with an id matching the host user's.
-Alternatively, user namespacing may be used once docker supports it.
