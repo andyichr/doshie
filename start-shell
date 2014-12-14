@@ -30,9 +30,9 @@ cat .doshie/logo >&2
 update
 
 # create group to match host group
-doshie_group="$( cat /etc/group | awk -F: '$3 == 1000 { print $1 }' )"
+doshie_group="$( cat /etc/group | awk -F: '$3 == '$DOSHIE_GID' { print $1 }' )"
 
-if [[ "$doshie_group" != "0" && -z "$doshie_group" ]]; then
+if [[ -z "$doshie_group" ]]; then
   echo "creating group doshie_grp_$DOSHIE_GID" >&2
   groupadd -g $DOSHIE_UID doshie_grp_$DOSHIE_GID
 fi
@@ -47,10 +47,17 @@ fi
 # mark the system as ready
 touch .doshie/.ready
 
+# resolve user
+doshie_user=doshie_$DOSHIE_UID
+
+if [[ "$DOSHIE_UID" == "0" ]]; then
+  doshie_user=root
+fi
+
 # start the interactive shell
 if [[ -z "$DOSHIE_CMD" ]]; then
-  su - doshie_$DOSHIE_UID
+  su - $doshie_user
 else
   # ..or run the command
-  su - doshie_$DOSHIE_UID -c "$DOSHIE_CMD"
+  su - $doshie_user -c "$DOSHIE_CMD"
 fi
