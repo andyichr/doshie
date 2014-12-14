@@ -32,7 +32,7 @@ update
 # create group to match host group
 doshie_group="$( cat /etc/group | awk -F: '$3 == 1000 { print $1 }' )"
 
-if [[ -z "$doshie_group" ]]; then
+if [[ "$doshie_group" != "0" && -z "$doshie_group" ]]; then
   echo "creating group doshie_grp_$DOSHIE_GID" >&2
   groupadd -g $DOSHIE_UID doshie_grp_$DOSHIE_GID
 fi
