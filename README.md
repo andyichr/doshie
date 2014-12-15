@@ -116,22 +116,25 @@ customization of *doshie*, such as specifying a base image (optional) and an
 environment update command (optional):
 
 ```bash
-DOSHIE_PROJECT_NAME=myproject    # optional
-DOSHIE_BASE_IMAGE=centos:centos7 # optional
-DOSHIE_ENV_UPDATE=env/update     # optional
-DOSHIE_DOCKER_FLAGS="-p 443:443" # optional
+DOSHIE_PROJECT_NAME=myproject     # optional
+DOSHIE_BASE_IMAGE=centos:centos7  # optional
+DOSHIE_ENV_UPDATE=env/update      # optional
+DOSHIE_ENV_UPDATE_USER=env/update # optional
+DOSHIE_DOCKER_FLAGS="-p 443:443"  # optional
 ```
 
 **NOTE:** If the base image is changed, there is no guarantee that the built-in
 shell commands, such as *update*, will continue to function.
 
 The command specified with *DOSHIE_ENV_UPDATE* should perform an incremental
-update of the development environment. It will be executed at the first run of
-*./shell*, and on every subsequent run. Typical commands executed here are
-system updates, installing of packages, and so-on. Sometimes, if the project is
-to be deployed as a *docker* image, a *Dockerfile* will be included in the
-project root which will add and invoke the same environment update script,
-producing a repeatable configuration for production as well as development.
+update of the development environment. The corresponding
+*DOSHIE_ENV_UPDATE_USER* does the same, but as the user on the host system who
+invoked the shell. It will be executed at the first run of *./shell*, and on
+every subsequent run. Typical commands executed here are system updates,
+installing of packages, and so-on. Sometimes, if the project is to be deployed
+as a *docker* image, a *Dockerfile* will be included in the project root which
+will add and invoke the same environment update script, producing a repeatable
+configuration for production as well as development.
 
 ### Updating
 

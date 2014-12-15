@@ -27,6 +27,7 @@ chmod +x /etc/profile.d/doshie.sh
 cat .doshie/logo >&2
 
 # update the environment
+export DOSHIE_USER=$doshie_user
 update
 
 # create group to match host group

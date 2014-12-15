@@ -30,4 +30,8 @@ cd /src
     $DOSHIE_ENV_UPDATE
   fi
 
+  if [[ ! -z "$DOSHIE_ENV_UPDATE_USER" ]]; then
+    su $DOSHIE_USER -c "$DOSHIE_ENV_UPDATE_USER"
+  fi
+
 ) 9>.doshie/.update-lock
