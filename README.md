@@ -120,11 +120,21 @@ DOSHIE_PROJECT_NAME=myproject          # optional
 DOSHIE_BASE_IMAGE=centos:centos7       # optional
 DOSHIE_ENV_UPDATE=env/update           # optional
 DOSHIE_ENV_UPDATE_USER=env/update-user # optional
+DOSHIE_CMD_PATH=env/bin                # optional
 DOSHIE_DOCKER_FLAGS="-p 443:443"       # optional
 ```
 
 **NOTE:** If the base image is changed, there is no guarantee that the built-in
 shell commands, such as *update*, will continue to function.
+
+##### *DOSHIE_CMD_PATH*
+
+The *DOSHIE_CMD_PATH* variable specifies a path, relative to the project root,
+containing commands to be made available in a running shell. For example, this
+path may contain an executable script named *build* which triggers a build of
+the project.
+
+##### *DOSHIE_ENV_UPDATE*/*DOSHIE_ENV_UPDATE_USER*
 
 The command specified with *DOSHIE_ENV_UPDATE* should perform an incremental
 update of the development environment. The corresponding

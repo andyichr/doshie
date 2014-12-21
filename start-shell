@@ -16,9 +16,9 @@ fi
 
 # set environment vars
 cat <<! >/etc/profile.d/doshie.sh
-export PATH="/src/.doshie/bin:$PATH"
 export PS1="$DOSHIE_PROJECT_NAME> "
 cd /src
+export PATH="/src/.doshie/bin:\$( readlink -f $DOSHIE_CMD_PATH ):$PATH"
 !
 
 chmod +x /etc/profile.d/doshie.sh
