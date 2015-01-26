@@ -18,8 +18,16 @@ fi
 cat <<! >/etc/profile.d/doshie.sh
 export PS1="$DOSHIE_PROJECT_NAME> "
 cd /src
-export PATH="/src/.doshie/bin:\$( readlink -f $DOSHIE_CMD_PATH ):$PATH"
+export PATH="/src/.doshie/bin:$PATH"
 !
+
+if [[ ! -z "$DOSHIE_CMD_PATH" ]]; then
+
+  cat <<! >>/etc/profile.d/doshie.sh
+export PATH="\$( readlink -f $DOSHIE_CMD_PATH ):$PATH"
+!
+
+fi
 
 chmod +x /etc/profile.d/doshie.sh
 . /etc/profile.d/doshie.sh
