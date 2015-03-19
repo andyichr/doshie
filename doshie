@@ -84,7 +84,9 @@ if [[ -z "$existing_shell" ]]; then
 
   echo -n "waiting for shell initialization..." >&2
 
-  for attempt in $( seq 1 720 ); do
+  doshie_ready="no"
+
+  for attempt in $( seq 1 7200 ); do
 
     if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null 2>&1; then
       echo
@@ -93,6 +95,7 @@ if [[ -z "$existing_shell" ]]; then
     fi
 
     if [[ -f .doshie/.ready ]]; then
+      doshie_ready="yes"
       break
     fi
 
@@ -100,6 +103,11 @@ if [[ -z "$existing_shell" ]]; then
     echo -n "."
 
   done
+
+  if [[ "$doshie_ready" != "yes" ]]; then
+    echo "timed out while waiting for doshie shell to become ready" >&2
+    exit 1
+  fi
 
   echo
 
