@@ -14,11 +14,15 @@ if [[ -f .doshie.rc ]]; then
   . .doshie.rc
 fi
 
+# resolve user
+doshie_user=doshie_$DOSHIE_UID
+
 # set environment vars
 cat <<! >/etc/profile.d/doshie.sh
 export PS1="$DOSHIE_PROJECT_NAME> "
 cd /src
 export PATH="/src/.doshie/bin:$PATH"
+export DOSHIE_USER=$doshie_user
 !
 
 if [[ ! -z "$DOSHIE_CMD_PATH" ]]; then
@@ -34,8 +38,6 @@ chmod +x /etc/profile.d/doshie.sh
 
 cat .doshie/logo >&2
 
-# update the environment
-export DOSHIE_USER=$doshie_user
 update
 
 # create group to match host group
@@ -56,9 +58,6 @@ fi
 
 # mark the system as ready
 touch .doshie/.ready
-
-# resolve user
-doshie_user=doshie_$DOSHIE_UID
 
 if [[ "$DOSHIE_UID" == "0" ]]; then
   doshie_user=root
