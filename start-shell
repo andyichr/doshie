@@ -63,6 +63,10 @@ if [[ "$DOSHIE_UID" == "0" ]]; then
   doshie_user=root
 fi
 
+if [[ "$doshie_user" == "doshie_0" ]]; then
+  doshie_user=root
+fi
+
 # start the interactive shell
 if [[ -z "$DOSHIE_CMD" ]]; then
   su - $doshie_user
