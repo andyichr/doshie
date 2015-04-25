@@ -17,6 +17,10 @@ fi
 # resolve user
 doshie_user=doshie_$DOSHIE_UID
 
+if [[ "$doshie_user" == "doshie_0" ]]; then
+  doshie_user=root
+fi
+
 # set environment vars
 cat <<! >/etc/profile.d/doshie.sh
 export PS1="$DOSHIE_PROJECT_NAME> "
@@ -60,10 +64,6 @@ fi
 touch .doshie/.ready
 
 if [[ "$DOSHIE_UID" == "0" ]]; then
-  doshie_user=root
-fi
-
-if [[ "$doshie_user" == "doshie_0" ]]; then
   doshie_user=root
 fi
 
