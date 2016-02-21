@@ -7,8 +7,6 @@
     ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝
                               ...at your service
 
-[![Build Status](https://travis-ci.org/andyichr/doshie.svg)](https://travis-ci.org/andyichr/doshie)
-
 A simple build-system bootstrapping program for software writers who prefer to
 do development in an interactive, isolated, docker-based environment. The idea
 is to enable writing software which has complex, build-time dependencies to be
