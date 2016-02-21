@@ -86,6 +86,9 @@ if [[ -z "$existing_shell" ]]; then
 
   doshie_ready="no"
 
+  docker logs -f ${existing_shell} &
+  tail_pid=$!
+
   for attempt in $( seq 1 7200 ); do
 
     if ! docker ps -a -q --no-trunc | grep $existing_shell >/dev/null 2>&1; then
@@ -100,9 +103,10 @@ if [[ -z "$existing_shell" ]]; then
     fi
 
     sleep 0.5
-    echo -n "."
 
   done
+
+  kill ${tail_pid}
 
   if [[ "$doshie_ready" != "yes" ]]; then
     echo "timed out while waiting for doshie shell to become ready" >&2
