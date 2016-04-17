@@ -69,16 +69,17 @@ if [[ -z "$existing_shell" ]]; then
 
   rm -f .doshie/.ready
 
-  existing_shell=$( docker run -d \
-                               -t \
-                               -i \
-                               -v "$doshie_root"/..:/src \
-                               -e DOSHIE_CMD="" \
-                               -e DOSHIE_UID="$doshie_uid" \
-                               -e DOSHIE_GID="$doshie_gid" \
-                               $DOSHIE_DOCKER_FLAGS \
-                               "$DOSHIE_BASE_IMAGE" \
-                               /bin/bash -c '. /src/.doshie/start-shell' )
+  docker_cmd="docker run -d \
+                         -t \
+                         -i \
+                         -v \"$doshie_root\"/..:/src \
+                         -e DOSHIE_CMD=\"\" \
+                         -e DOSHIE_UID=\"$doshie_uid\" \
+                         -e DOSHIE_GID=\"$doshie_gid\" \
+                         $DOSHIE_DOCKER_FLAGS \
+                         \"$DOSHIE_BASE_IMAGE\" \
+                         /bin/bash -c '. /src/.doshie/start-shell'"
+  existing_shell=$( . <( echo "${docker_cmd}" ) )
 
   echo "$existing_shell" > .doshie/.existing_shell
 
